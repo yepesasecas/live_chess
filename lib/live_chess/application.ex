@@ -15,9 +15,11 @@ defmodule LiveChess.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: LiveChess.PubSub},
       # Start the Endpoint (http/https)
-      LiveChessWeb.Endpoint
+      LiveChessWeb.Endpoint,
       # Start a worker by calling: LiveChess.Worker.start_link(arg)
       # {LiveChess.Worker, arg}
+      LiveChess.Count,
+      LiveChess.LiveGamesServer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

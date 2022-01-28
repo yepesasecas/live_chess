@@ -46,7 +46,6 @@ defmodule LiveChessWeb do
     quote do
       use Phoenix.LiveView,
         layout: {LiveChessWeb.LayoutView, "live.html"}
-
       unquote(view_helpers())
     end
   end

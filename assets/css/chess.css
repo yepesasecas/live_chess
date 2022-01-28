@@ -1,0 +1,29 @@
+/* Chess colours palete */
+/* https://www.color-hex.com/color-palette/8548 */
+
+.chessboard {
+  width: 690px;
+  height: 690px;
+  margin: 20px;
+  /*border: 25px solid #333;*/
+}
+.black {
+  float: left;
+  width: 80px;
+  height: 80px;
+  background-color: #769656;
+  font-size:50px;
+  text-align:center;
+  display: table-cell;
+  vertical-align:middle;
+}
+.white {
+  float: left;
+  width: 80px;
+  height: 80px;
+  background-color: #eeeed2;
+  font-size:50px;
+  text-align:center;
+  display: table-cell;
+  vertical-align:middle;
+}
