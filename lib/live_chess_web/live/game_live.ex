@@ -3,7 +3,7 @@ defmodule LiveChessWeb.GameLive
   use LiveChessWeb, :live_view
   require Integer
 
-  alias LiveChess.LiveGamesServer
+  alias LiveChess.{LiveGamesServer, Chessboard, Move}
 
   def mount(%{"table_name" => table_name}, _session, socket) do
     socket = 
@@ -23,7 +23,7 @@ defmodule LiveChessWeb.GameLive
       else
         table_name = socket.assigns[:table_name]
         from_square = socket.assigns[:from_square]
-        move = %LiveChess.Move{from: from_square, to: selected_square}
+        move = %Move{from: from_square, to: selected_square}
         case LiveGamesServer.play(table_name, move) do
           {:ok, game} ->  
             socket
@@ -76,6 +76,9 @@ defmodule LiveChessWeb.GameLive
     """
   end
 
+
+  # private
+
   defp render_chessboard(assigns) do
     [fen | _] = String.split(assigns[:game].current_fen)
     squares =
@@ -95,19 +98,19 @@ defmodule LiveChessWeb.GameLive
 
   defp render_square(assigns, "empty", i) do
     ~H"""
-      <div phx-click="click_square" phx-value-selected_square={square_pgn(i)} class={square_color(i)}></div>
+      <div phx-click="click_square" phx-value-selected_square={Chessboard.square_pgn(i)} class={Chessboard.square_color(i)}></div>
     """
   end
 
   defp render_square(assigns, square, i) do
     ~H"""
-    <div phx-click="click_square" phx-value-selected_square={square_pgn(i)} class={square_color(i)}>
+    <div phx-click="click_square" phx-value-selected_square={Chessboard.square_pgn(i)} class={Chessboard.square_color(i)}>
       <img src={Routes.static_path(@socket, "/images/#{piece_image_name(square)}.png")}>
     </div>
     """
   end  
 
-  # Helpers
+  # helpers
 
   defp replace_empty_squares(squares) do
     Enum.map(squares, fn square -> 
@@ -118,34 +121,6 @@ defmodule LiveChessWeb.GameLive
           ["empty"] |> List.duplicate(value) |> List.flatten
       end
     end)
-  end
-
-  defp square_color(i) do
-    colors = [
-      "black", "white", "black", "white", "black", "white", "black", "white",
-      "white", "black", "white", "black", "white", "black", "white", "black",
-      "black", "white", "black", "white", "black", "white", "black", "white",
-      "white", "black", "white", "black", "white", "black", "white", "black",
-      "black", "white", "black", "white", "black", "white", "black", "white",
-      "white", "black", "white", "black", "white", "black", "white", "black",
-      "black", "white", "black", "white", "black", "white", "black", "white",
-      "white", "black", "white", "black", "white", "black", "white", "black",
-    ]
-    Enum.at(colors, i)
-  end
-
-  defp square_pgn(i) do
-    pgn = [
-      "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-      "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-      "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6", 
-      "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5", 
-      "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4", 
-      "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3", 
-      "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2", 
-      "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1",  
-    ]
-    Enum.at(pgn, i)
   end
 
   defp piece_image_name(square) do
