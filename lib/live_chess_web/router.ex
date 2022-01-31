@@ -18,7 +18,7 @@ defmodule LiveChessWeb.Router do
     pipe_through :browser
 
     get("/", PageController, :index)
-    live("/game/:table_name", GameLive)
+    live("/table/:name", TableLive)
   end
 
   # Other scopes may use custom stacks.

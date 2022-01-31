@@ -39,32 +39,32 @@ defmodule LiveChess.LiveGamesServer do
 
   # -------  Implementation  (Runs in GenServer process) -------
 
-  def handle_call({:current_or_new, table_name}, _from, games) do
-    new_game = Map.get(games, table_name, Chess.new_game())
-    games = Map.put(games, table_name, new_game)
-    {:reply, new_game, games}
+  def handle_call({:current_or_new, table_name}, _from, tables) do
+    new_table = Map.get(tables, table_name, Chess.new_table(name: table_name))
+    tables = Map.put(tables, table_name, new_table)
+    {:reply, new_table, tables}
   end
 
-  def handle_call({:new, table_name}, _from, games) do
-    new_game = Chess.new_game()
-    games = Map.put(games, table_name, new_game)
-    PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:new_game, new_game})
-    {:reply, new_game, games}
+  def handle_call({:new, table_name}, _from, tables) do
+    new_table = Chess.new_table()
+    tables = Map.put(tables, table_name, new_table)
+    PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:new_table, new_table})
+    {:reply, new_table, tables}
   end
 
-  def handle_call({:get, table_name}, _from, games) do
-    {:reply, Map.get(games, table_name), games}
+  def handle_call({:get, table_name}, _from, tables) do
+    {:reply, Map.get(tables, table_name), tables}
   end
 
-  def handle_call({:play, table_name, move}, _from, games) do
-    game = Map.get(games, table_name)
-    case Chess.game_play(game, move) do
-      {:ok, updated_game} ->
-        PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:played, updated_game})
-        games = Map.put(games, table_name, updated_game)
-        {:reply, {:ok, updated_game}, games}
+  def handle_call({:play, table_name, move}, _from, tables) do
+    table = Map.get(tables, table_name)
+    case Chess.game_play(table, move) do
+      {:ok, updated_table} ->
+        PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:played, updated_table})
+        tables = Map.put(tables, table_name, updated_table)
+        {:reply, {:ok, updated_table}, tables}
       {:error, msg} ->
-        {:reply, {:error, msg}, games}
+        {:reply, {:error, msg}, tables}
     end
   end
 end

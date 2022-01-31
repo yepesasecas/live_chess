@@ -1,14 +1,14 @@
-defmodule LiveChessWeb.GameLive
+defmodule LiveChessWeb.TableLive
  do
   use LiveChessWeb, :live_view
   require Integer
 
   alias LiveChess.{Chess, LiveGamesServer}
 
-  def mount(%{"table_name" => table_name}, _session, socket) do
+  def mount(%{"name" => table_name}, _session, socket) do
     socket = 
       socket
-      |> assign(game: LiveGamesServer.current_or_new(table_name))
+      |> assign(table: LiveGamesServer.current_or_new(table_name))
       |> assign(table_name: table_name)
       |> assign(from_square: nil)
       |> assign(error_msg: nil)
@@ -25,9 +25,9 @@ defmodule LiveChessWeb.GameLive
         from_square = socket.assigns[:from_square]
         move = Chess.new_move(from: from_square, to: selected_square)
         case LiveGamesServer.play(table_name, move) do
-          {:ok, game} ->  
+          {:ok, table} ->
             socket
-            |> assign(game: game)
+            |> assign(table: table)
             |> assign(from_square: nil)
             |> assign(error_msg: nil)
           {:error, msg} -> 
@@ -49,17 +49,17 @@ defmodule LiveChessWeb.GameLive
     {:noreply, socket}
   end
 
-  def handle_info({:new_game, game}, socket) do
+  def handle_info({:new_table, table}, socket) do
     socket =
       socket
-      |> assign(game: game)
+      |> assign(table: table)
       |> assign(from_square: nil)
       |> assign(error_msg: nil)
     {:noreply, socket}
   end
 
-  def handle_info({:played, game}, socket) do
-    {:noreply, assign(socket, game: game)}
+  def handle_info({:played, table}, socket) do
+    {:noreply, assign(socket, table: table)}
   end
 
   def render(assigns) do
@@ -67,9 +67,11 @@ defmodule LiveChessWeb.GameLive
     <%= render_chessboard(assigns) %>
     <div>error_msg: <%= @error_msg %></div>
     <div>from: <%= @from_square %></div>
-    <div>game check: <%= @game.check %></div>
-    <div>game fen: <%= @game.current_fen %></div>
-    <div>game status: <%= @game.status %></div>
+    <div>game check: <%= @table.game.check %></div>
+    <div>game fen: <%= @table.game.current_fen %></div>
+    <div>game status: <%= @table.game.status %></div>
+    <div>white player: <%= @table.white_player %></div>
+    <div>black player: <%= @table.black_player %></div>
     <div>
       <button phx-click="new_game">new game</button>
     </div>
@@ -80,7 +82,7 @@ defmodule LiveChessWeb.GameLive
   # private
 
   defp render_chessboard(assigns) do
-    [fen | _] = String.split(assigns[:game].current_fen)
+    [fen | _] = String.split(assigns[:table].game.current_fen)
     squares =
       fen
       |> String.replace("/", "")
