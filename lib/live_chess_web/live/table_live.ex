@@ -65,6 +65,7 @@ defmodule LiveChessWeb.TableLive
   def render(assigns) do
     ~H"""
     <%= render_chessboard(assigns) %>
+    <h1>Table: <%= @table_name%></h1>
     <div>error_msg: <%= @error_msg %></div>
     <div>from: <%= @from_square %></div>
     <div>game check: <%= @table.game.check %></div>
@@ -73,7 +74,7 @@ defmodule LiveChessWeb.TableLive
     <div>white player: <%= @table.white_player %></div>
     <div>black player: <%= @table.black_player %></div>
     <div>
-      <button phx-click="new_game">new game</button>
+      <button id="new_game" phx-click="new_game">new game</button>
     </div>
     """
   end

@@ -46,7 +46,7 @@ defmodule LiveChess.LiveGamesServer do
   end
 
   def handle_call({:new, table_name}, _from, tables) do
-    new_table = Chess.new_table()
+    new_table = Chess.new_table(name: table_name)
     tables = Map.put(tables, table_name, new_table)
     PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:new_table, new_table})
     {:reply, new_table, tables}
