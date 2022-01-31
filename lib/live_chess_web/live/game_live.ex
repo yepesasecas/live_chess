@@ -3,7 +3,7 @@ defmodule LiveChessWeb.GameLive
   use LiveChessWeb, :live_view
   require Integer
 
-  alias LiveChess.{LiveGamesServer, Chessboard, Move}
+  alias LiveChess.{Chess, LiveGamesServer}
 
   def mount(%{"table_name" => table_name}, _session, socket) do
     socket = 
@@ -23,7 +23,7 @@ defmodule LiveChessWeb.GameLive
       else
         table_name = socket.assigns[:table_name]
         from_square = socket.assigns[:from_square]
-        move = %Move{from: from_square, to: selected_square}
+        move = Chess.new_move(from: from_square, to: selected_square)
         case LiveGamesServer.play(table_name, move) do
           {:ok, game} ->  
             socket
@@ -98,13 +98,13 @@ defmodule LiveChessWeb.GameLive
 
   defp render_square(assigns, "empty", i) do
     ~H"""
-      <div phx-click="click_square" phx-value-selected_square={Chessboard.square_pgn(i)} class={Chessboard.square_color(i)}></div>
+      <div phx-click="click_square" phx-value-selected_square={Chess.board_square_pgn(i)} class={Chess.board_square_color(i)}></div>
     """
   end
 
   defp render_square(assigns, square, i) do
     ~H"""
-    <div phx-click="click_square" phx-value-selected_square={Chessboard.square_pgn(i)} class={Chessboard.square_color(i)}>
+    <div phx-click="click_square" phx-value-selected_square={Chess.board_square_pgn(i)} class={Chess.board_square_color(i)}>
       <img src={Routes.static_path(@socket, "/images/#{piece_image_name(square)}.png")}>
     </div>
     """

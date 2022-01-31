@@ -1,4 +1,4 @@
-defmodule LiveChess.Chessboard do
+defmodule LiveChess.Chess.Board do
   
   def square_color(i) do
     colors = [

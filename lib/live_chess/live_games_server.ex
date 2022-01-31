@@ -2,6 +2,7 @@ defmodule LiveChess.LiveGamesServer do
   use GenServer
 
   alias Phoenix.PubSub
+  alias LiveChess.Chess
 
   @name :games_server
 
@@ -57,7 +58,7 @@ defmodule LiveChess.LiveGamesServer do
 
   def handle_call({:play, table_name, move}, _from, games) do
     game = Map.get(games, table_name)
-    case Chess.play(game, LiveChess.Move.to_string(move)) do
+    case Chess.game_play(game, move) do
       {:ok, updated_game} ->
         PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:played, updated_game})
         games = Map.put(games, table_name, updated_game)

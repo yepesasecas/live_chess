@@ -1,5 +1,5 @@
-defmodule LiveChess.Move do
-  defstruct from: nil, to: nil
+defmodule LiveChess.Chess.Move do
+  defstruct [from: nil, to: nil]
 
   def valid?(move) do
     if move.from != nil && move.to != nil do
