@@ -18,7 +18,6 @@ defmodule LiveChess.Application do
       LiveChessWeb.Endpoint,
       # Start a worker by calling: LiveChess.Worker.start_link(arg)
       # {LiveChess.Worker, arg}
-      LiveChess.Count,
       LiveChess.LiveGamesServer
     ]
 
