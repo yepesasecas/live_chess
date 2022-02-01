@@ -21,8 +21,8 @@ defmodule LiveChess.LiveGamesServer do
     {:ok, start_value}
   end
 
-  def current_or_new(table_name) do
-    GenServer.call(@name, {:current_or_new, table_name})
+  def current_or_new(table_params) do
+    GenServer.call(@name, {:current_or_new, table_params})
   end
 
   def new(table_name) do
@@ -39,14 +39,16 @@ defmodule LiveChess.LiveGamesServer do
 
   # -------  Implementation  (Runs in GenServer process) -------
 
-  def handle_call({:current_or_new, table_name}, _from, tables) do
-    new_table = Map.get(tables, table_name, Chess.new_table(name: table_name))
+  def handle_call({:current_or_new, table_params}, _from, tables) do
+    %{"name" => table_name} = table_params
+    new_table = Map.get(tables, table_name, Chess.new_table(table_params))
     tables = Map.put(tables, table_name, new_table)
     {:reply, new_table, tables}
   end
 
-  def handle_call({:new, table_name}, _from, tables) do
-    new_table = Chess.new_table(name: table_name)
+  def handle_call({:new, table_params}, _from, tables) do
+    %{"name" => table_name} = table_params
+    new_table = Chess.new_table(table_params)
     tables = Map.put(tables, table_name, new_table)
     PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:new_table, new_table})
     {:reply, new_table, tables}
@@ -58,11 +60,13 @@ defmodule LiveChess.LiveGamesServer do
 
   def handle_call({:play, table_name, move}, _from, tables) do
     table = Map.get(tables, table_name)
+
     case Chess.game_play(table, move) do
       {:ok, updated_table} ->
         PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:played, updated_table})
         tables = Map.put(tables, table_name, updated_table)
         {:reply, {:ok, updated_table}, tables}
+
       {:error, msg} ->
         {:reply, {:error, msg}, tables}
     end

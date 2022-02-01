@@ -1,5 +1,5 @@
 defmodule LiveChess.Chess.Move do
-  defstruct [from: nil, to: nil]
+  defstruct from: nil, to: nil
 
   def valid?(move) do
     if move.from != nil && move.to != nil do
@@ -10,6 +10,6 @@ defmodule LiveChess.Chess.Move do
   end
 
   def to_string(move) do
-   "#{move.from}-#{move.to}"
-  end 
+    "#{move.from}-#{move.to}"
+  end
 end

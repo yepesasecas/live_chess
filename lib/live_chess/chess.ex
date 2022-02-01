@@ -1,23 +1,31 @@
 defmodule LiveChess.Chess do
-  alias LiveChess.Chess.{Board, Table, Move}
+  alias LiveChess.Chess.{Board, Table, Move, Player}
 
   # Chess Game
 
-  def new_table(name: name) do
-    %Table{
-      name: name,
+  def new_table(params) do
+    table = %Table{
+      name: params["table_name"],
       game: Chess.new_game()
     }
+
+    player_name = Map.get(params, "player_name", nil)
+
+    if player_name == nil do
+      table
+    else
+      Map.put(table, :white_player, %Player{name: player_name})
+    end
   end
 
   def game_play(%Table{game: game} = table, %Move{} = move) do
     case Chess.play(game, Move.to_string(move)) do
       {:ok, updated_game} ->
         {:ok, Map.put(table, :game, updated_game)}
+
       {:error, msg} ->
         {:error, msg}
     end
-
   end
 
   # Move
