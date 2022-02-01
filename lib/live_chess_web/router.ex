@@ -17,7 +17,7 @@ defmodule LiveChessWeb.Router do
   scope "/", LiveChessWeb do
     pipe_through :browser
 
-    get("/", PageController, :index)
+    live("/", ClubLive)
     live("/table/:name", TableLive)
   end
 

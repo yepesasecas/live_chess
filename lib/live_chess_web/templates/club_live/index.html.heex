@@ -1,0 +1,7 @@
+<h1>Welcome <strong><%= @player.name %></strong> to LiveChess!</h1>
+<.form let={f} for={@changeset} phx-change="validate" phx-submit="save">
+  <%= text_input f, :name %>
+  <%= error_tag f, :name %>
+
+  <%= submit "Search opponent" %>
+</.form>

@@ -1,5 +1,6 @@
 defmodule LiveChess.Chess do
   alias LiveChess.Chess.{Board, Table, Move, Player}
+  alias Ecto.Changeset
 
   # Chess Game
 
@@ -43,4 +44,21 @@ defmodule LiveChess.Chess do
   def board_square_color(i) do
     Board.square_color(i)
   end
+
+  # Player
+
+  def new_player do
+    %Player{}
+  end
+
+  def change_player(player, params) do
+    player
+    |> Player.changeset(params)
+  end
+
+  def apply_changes_to_player(changeset) do
+    Changeset.apply_changes(changeset)
+  end
 end
+
+
