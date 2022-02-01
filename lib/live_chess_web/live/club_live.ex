@@ -15,7 +15,8 @@ defmodule LiveChessWeb.ClubLive do
       |> Chess.change_player(params)
       |> Map.put(:action, :insert)
 
-    player = if changeset.valid? do
+    player =
+      if changeset.valid? do
         Chess.apply_changes_to_player(changeset)
       else
         socket.assigns[:player]
@@ -24,6 +25,18 @@ defmodule LiveChessWeb.ClubLive do
     {:noreply, assign(socket, changeset: changeset, player: player)}
   end
 
+  def handle_event("save", %{"player" => player_params}, socket) do
+    changeset = socket.assigns[:changeset]
+
+    if changeset.valid? do
+      {:noreply,
+       socket
+       |> put_flash(:info, "waiting opponent")
+       |> redirect(to: Routes.live_path(LiveChessWeb.Endpoint, LiveChessWeb.TableLive, 1))}
+    else
+      {:noreply, socket}
+    end
+  end
 
   def render(assigns) do
     LiveChessWeb.ClubLiveView.render("index.html", assigns)

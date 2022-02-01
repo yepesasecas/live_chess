@@ -60,5 +60,3 @@ defmodule LiveChess.Chess do
     Changeset.apply_changes(changeset)
   end
 end
-
-
