@@ -3,5 +3,14 @@
   <%= text_input f, :name %>
   <%= error_tag f, :name %>
 
-  <%= submit "Search opponent" %>
+  <%= submit "Create table" %>
 </.form>
+
+<%= for {table_name, table} <- @club_tables do %>
+  <hr>
+  <div>
+    <h2><%= table_name %></h2>
+    <p>white player: <%= has_player?(table.white_player)%></p>
+    <p>black palyer: <%= has_player?(table.black_player) %></p>
+  </div>
+<% end %>

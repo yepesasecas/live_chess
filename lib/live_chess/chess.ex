@@ -3,20 +3,13 @@ defmodule LiveChess.Chess do
   alias Ecto.Changeset
 
   # Chess Game
+  def chess_game_struct, do: %Chess.Game{}
 
-  def new_table(params) do
+  def new_table(name: name) do
     table = %Table{
-      name: params["table_name"],
+      name: name,
       game: Chess.new_game()
     }
-
-    player_name = Map.get(params, "player_name", nil)
-
-    if player_name == nil do
-      table
-    else
-      Map.put(table, :white_player, %Player{name: player_name})
-    end
   end
 
   def game_play(%Table{game: game} = table, %Move{} = move) do
@@ -28,6 +21,36 @@ defmodule LiveChess.Chess do
         {:error, msg}
     end
   end
+
+  def table_new_game(%Table{} = table) do
+    Map.put(table, :game, Chess.new_game())
+  end
+
+  def table_status(%Table{} = table) do
+    Table.status(table)
+  end
+
+  def add_player(%Table{white_player: nil} = table, :white, %Player{} = player) do
+    %{table | white_player: player}
+  end
+
+  def add_player(%Table{black_player: nil} = table, :black, %Player{} = player) do
+    %{table | black_player: player}
+  end
+
+  def add_player(%Table{} = table, _side, _player) do
+    table
+  end
+
+  def table_player_side(%Table{white_player: %Player{uuid: uuid}}, %Player{uuid: uuid}) do
+    :white_player
+  end
+
+  def table_player_side(%Table{black_player: %Player{uuid: uuid}}, %Player{uuid: uuid}) do
+    :black_player
+  end
+
+  def table_player_side(_table, _player), do: :viewer
 
   # Move
 
@@ -48,7 +71,7 @@ defmodule LiveChess.Chess do
   # Player
 
   def new_player do
-    %Player{}
+    %Player{uuid: Ecto.UUID.generate}
   end
 
   def change_player(player, params) do

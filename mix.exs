@@ -49,7 +49,8 @@ defmodule LiveChess.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:chess, "~> 0.4.1"}
+      {:chess, "~> 0.4.1"},
+      {:dictionary, "~> 0.1.0"}
     ]
   end
 
