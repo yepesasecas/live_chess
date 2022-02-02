@@ -104,4 +104,31 @@ defmodule LiveChess.ChessTest do
       assert :viewer = Chess.table_player_side(table, viewer_player)
     end
   end
+
+  describe "player" do
+
+    alias LiveChess.Chess
+    alias LiveChess.Chess.Player
+
+    test "new" do
+      assert %Player{name: nil, uuid: _uuid} = Chess.new_player()
+    end
+
+    test "changeset" do
+      player_changeset =
+        Chess.new_player()
+        |> Chess.change_player(%{name: "player"})
+
+      assert %Ecto.Changeset{} = player_changeset
+    end
+
+    test "changes applied" do
+      player =
+        Chess.new_player()
+        |> Chess.change_player(%{name: "player"})
+        |> Chess.apply_changes_to_player()
+
+      assert %Player{name: "player", uuid: _uuid} = player
+    end
+  end
 end

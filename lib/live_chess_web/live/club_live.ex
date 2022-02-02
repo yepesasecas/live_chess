@@ -5,7 +5,7 @@ defmodule LiveChessWeb.ClubLive do
   alias LiveChess.LiveGamesServer
   alias LiveChess.Chess.Player
 
-  def mount(params, _session, socket) do
+  def mount(_params, _session, socket) do
     player = Chess.new_player()
     changeset = Chess.change_player(player, %{})
     club_tables = LiveGamesServer.get_all()
@@ -13,10 +13,10 @@ defmodule LiveChessWeb.ClubLive do
     {:ok, assign(socket, %{player: player, changeset: changeset, club_tables: club_tables})}
   end
 
-  def handle_event("validate", %{"player" => params}, socket) do
+  def handle_event("validate", %{"player" => player_params} = params, socket) do
     changeset =
       %Player{}
-      |> Chess.change_player(params)
+      |> Chess.change_player(player_params)
       |> Map.put(:action, :insert)
 
     player =
@@ -25,7 +25,6 @@ defmodule LiveChessWeb.ClubLive do
       else
         socket.assigns[:player]
       end
-
     {:noreply, assign(socket, changeset: changeset, player: player)}
   end
 

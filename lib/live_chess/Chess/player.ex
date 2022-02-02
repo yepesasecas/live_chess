@@ -9,8 +9,8 @@ defmodule LiveChess.Chess.Player do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:name, :uuid])
-    |> validate_required([:name, :uuid])
+    |> cast(params, [:name])
+    |> validate_required([:name])
     |> validate_length(:name, max: 20)
   end
 end
