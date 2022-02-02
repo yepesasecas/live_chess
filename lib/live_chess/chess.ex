@@ -64,6 +64,10 @@ defmodule LiveChess.Chess do
     Board.square_pgn(i)
   end
 
+  def board_square_pgn(:black, i) do
+    Board.square_pgn(:black, i)
+  end
+
   def board_square_color(i) do
     Board.square_color(i)
   end

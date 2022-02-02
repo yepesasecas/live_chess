@@ -1,14 +1,6 @@
 defmodule LiveChess.Chess.Board do
   def square_color(i) do
     colors = [
-      "black",
-      "white",
-      "black",
-      "white",
-      "black",
-      "white",
-      "black",
-      "white",
       "white",
       "black",
       "white",
@@ -64,14 +56,33 @@ defmodule LiveChess.Chess.Board do
       "white",
       "black",
       "white",
-      "black"
+      "black",
+      "black",
+      "white",
+      "black",
+      "white",
+      "black",
+      "white",
+      "black",
+      "white",
     ]
 
     Enum.at(colors, i)
   end
 
   def square_pgn(i) do
-    pgn = [
+    pgn()
+    |> Enum.at(i)
+  end
+
+  def square_pgn(:black, i) do
+    pgn()
+    |> Enum.reverse()
+    |> Enum.at(i)
+  end
+
+  defp pgn() do
+    [
       "a8",
       "b8",
       "c8",
@@ -137,7 +148,5 @@ defmodule LiveChess.Chess.Board do
       "g1",
       "h1"
     ]
-
-    Enum.at(pgn, i)
   end
 end

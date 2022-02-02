@@ -1,0 +1,12 @@
+<%= render_white_chessboard(assigns) %>
+<h1>Table: <%= @table.name%></h1>
+<div>error_msg: <%= @error_msg %></div>
+<div>from: <%= @from_square %></div>
+<div>game check: <%= @table.game.check %></div>
+<div>game fen: <%= @table.game.current_fen %></div>
+<div>game status: <%= @table.game.status %></div>
+<div>white player: <%= has_player?(@table.white_player) %></div>
+<div>black player: <%= has_player?(@table.black_player) %></div>
+<div>
+  <button id="new_game" phx-click="new_game">new game</button>
+</div>

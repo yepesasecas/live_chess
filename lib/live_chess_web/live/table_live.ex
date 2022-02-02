@@ -6,19 +6,26 @@ defmodule LiveChessWeb.TableLive do
 
   def mount(%{"name" => table_name} = params, _session, socket) do
     player =
-      Chess.new_player()
-      |> Chess.change_player(%{name: Map.get(params, "player_name", "Anonymus")})
-      |> Chess.apply_changes_to_player()
+      case connected?(socket) do
+        true ->
+          Chess.new_player()
+          |> Chess.change_player(%{name: Map.get(params, "player_name", "Anonymus")})
+          |> Chess.apply_changes_to_player()
+
+        false ->
+          nil
+      end
 
     table =
       case connected?(socket) do
         true ->
           LiveChessWeb.Endpoint.subscribe(LiveGamesServer.topic(table_name))
-          LiveGamesServer.get(table_name)
+          LiveGamesServer.current_or_new(params, player)
 
         false ->
-          LiveGamesServer.current_or_new(params, player)
+          Chess.new_table(name: table_name)
       end
+
     socket =
       socket
       |> assign(table: table)
@@ -82,6 +89,16 @@ defmodule LiveChessWeb.TableLive do
   end
 
   def render(assigns) do
-    LiveChessWeb.TableLiveView.render("chess_game.html", assigns)
+    table = assigns[:table]
+    player = assigns[:self]
+
+    case Chess.table_player_side(table, player) do
+      :white_player ->
+        LiveChessWeb.TableLiveView.render("white_side.html", assigns)
+      :black_player ->
+        LiveChessWeb.TableLiveView.render("black_side.html", assigns)
+      :viewer ->
+        LiveChessWeb.TableLiveView.render("viewer_side.html", assigns)
+    end
   end
 end
