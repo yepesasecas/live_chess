@@ -95,8 +95,10 @@ defmodule LiveChessWeb.TableLive do
     case Chess.table_player_side(table, player) do
       :white_player ->
         LiveChessWeb.TableLiveView.render("white_side.html", assigns)
+
       :black_player ->
         LiveChessWeb.TableLiveView.render("black_side.html", assigns)
+
       :viewer ->
         LiveChessWeb.TableLiveView.render("viewer_side.html", assigns)
     end

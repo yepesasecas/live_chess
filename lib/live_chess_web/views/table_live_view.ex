@@ -71,10 +71,12 @@ defmodule LiveChessWeb.TableLiveView do
   # helpers
   defp fen_to_squares(:black, fen) do
     [fen | _] = String.split(fen)
+
     fen
     |> String.reverse()
     |> fen_to_squares()
   end
+
   defp fen_to_squares(fen) do
     [fen | _] = String.split(fen)
 

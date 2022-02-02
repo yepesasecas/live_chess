@@ -64,7 +64,7 @@ defmodule LiveChess.Chess.Board do
       "black",
       "white",
       "black",
-      "white",
+      "white"
     ]
 
     Enum.at(colors, i)

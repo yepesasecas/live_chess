@@ -16,9 +16,11 @@ defmodule LiveChessWeb.ClubLiveTest do
 
     # create new table
     params = %{"name" => "new_game_test"}
-    player = Chess.new_player()
+
+    player =
+      Chess.new_player()
       |> Chess.change_player(%{name: "test_player"})
-      |> Chess.apply_changes_to_player
+      |> Chess.apply_changes_to_player()
 
     LiveChess.LiveGamesServer.current_or_new(params, player)
 

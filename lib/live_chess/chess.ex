@@ -6,7 +6,7 @@ defmodule LiveChess.Chess do
   def chess_game_struct, do: %Chess.Game{}
 
   def new_table(name: name) do
-    table = %Table{
+    %Table{
       name: name,
       game: Chess.new_game()
     }
@@ -75,7 +75,7 @@ defmodule LiveChess.Chess do
   # Player
 
   def new_player do
-    %Player{uuid: Ecto.UUID.generate}
+    %Player{uuid: Ecto.UUID.generate()}
   end
 
   def change_player(player, params) do

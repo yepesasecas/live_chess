@@ -3,7 +3,6 @@ defmodule LiveChess.LiveGamesServer do
 
   alias Phoenix.PubSub
   alias LiveChess.Chess
-  alias LiveChess.Chess.Player
 
   @name :games_server
 
@@ -69,11 +68,12 @@ defmodule LiveChess.LiveGamesServer do
 
   def handle_call({:new, table_params}, _from, tables) do
     table_name = Map.get(table_params, "name")
-    player_name = Map.get(table_params, "player_name", "Anonymus")
+
     table =
       tables
       |> Map.get(table_name)
       |> Chess.table_new_game()
+
     tables = Map.put(tables, table_name, table)
 
     PubSub.broadcast(LiveChess.PubSub, topic(table_name), {:new_table, table})
