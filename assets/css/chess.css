@@ -10,6 +10,10 @@
 .chessboard img {
   margin-top: 10px;
 }
+
+.chessboard .last_move {
+  background-color: #9a9c4f !important;
+}
 .black {
   float: left;
   width: 80px;

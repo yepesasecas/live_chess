@@ -23,6 +23,7 @@ defmodule LiveChess.Chess do
           table
           |> Map.put(:game, updated_game)
           |> Map.put(:fen, Fen.from_string(updated_game.current_fen))
+          |> Map.put(:last_move, move)
 
         {:ok, table}
 
@@ -37,6 +38,7 @@ defmodule LiveChess.Chess do
     table
     |> Map.put(:game, new_game)
     |> Map.put(:fen, Fen.from_string(new_game.current_fen))
+    |> Map.put(:last_move, nil)
   end
 
   def table_status(%Table{} = table) do

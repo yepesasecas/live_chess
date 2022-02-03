@@ -2,7 +2,7 @@ defmodule LiveChessWeb.TableLiveView do
   use LiveChessWeb, :view
 
   alias LiveChess.Chess
-  alias LiveChess.Chess.{Player, Fen}
+  alias LiveChess.Chess.{Table, Player}
 
   def render_white_chessboard(assigns) do
     ~H"""
@@ -39,27 +39,37 @@ defmodule LiveChessWeb.TableLiveView do
 
   defp render_white_square(assigns, "empty", i) do
     ~H"""
-    <div phx-click="click_square" phx-value-selected_square={Chess.board_square_pgn(i)} class={Chess.board_square_color(i)}></div>
+    <div phx-click="click_square"
+         phx-value-selected_square={Chess.board_square_pgn(i)}
+         class={square_clasess(i, assigns.table)}>
+    </div>
     """
   end
 
   defp render_white_square(assigns, square, i) do
     ~H"""
-    <div phx-click="click_square" phx-value-selected_square={Chess.board_square_pgn(i)} class={Chess.board_square_color(i)}>
-      <img src={Routes.static_path(@socket, "/images/#{piece_image_name(square)}.png")}>
+    <div phx-click="click_square"
+         phx-value-selected_square={Chess.board_square_pgn(i)}
+         class={square_clasess(i, assigns.table)}>
+            <img src={Routes.static_path(@socket, "/images/#{piece_image_name(square)}.png")}>
     </div>
     """
   end
 
   defp render_black_square(assigns, "empty", i) do
     ~H"""
-    <div phx-click="click_square" phx-value-selected_square={Chess.board_square_pgn(:black, i)} class={Chess.board_square_color(i)}></div>
+    <div phx-click="click_square"
+         phx-value-selected_square={Chess.board_square_pgn(:black, i)}
+         class={square_clasess(:black, i, assigns.table)}>
+    </div>
     """
   end
 
   defp render_black_square(assigns, square, i) do
     ~H"""
-    <div phx-click="click_square" phx-value-selected_square={Chess.board_square_pgn(:black, i)} class={Chess.board_square_color(i)}>
+    <div phx-click="click_square"
+         phx-value-selected_square={Chess.board_square_pgn(:black, i)}
+         class={square_clasess(:black, i, assigns.table)}>
       <img src={Routes.static_path(@socket, "/images/#{piece_image_name(square)}.png")}>
     </div>
     """
@@ -85,6 +95,34 @@ defmodule LiveChessWeb.TableLiveView do
       "white_#{square}"
     else
       "black_#{square}"
+    end
+  end
+
+  defp square_clasess(i, %Table{last_move: nil}), do: Chess.board_square_color(i)
+
+  defp square_clasess(i, %Table{last_move: move}) do
+    pgn = Chess.board_square_pgn(i)
+
+    case pgn == move.from || pgn == move.to do
+      true ->
+        "#{Chess.board_square_color(i)} last_move"
+
+      false ->
+        Chess.board_square_color(i)
+    end
+  end
+
+  defp square_clasess(:black, i, %Table{last_move: nil}), do: Chess.board_square_color(i)
+
+  defp square_clasess(:black, i, %Table{last_move: move}) do
+    pgn = Chess.board_square_pgn(:black, i)
+
+    case pgn == move.from || pgn == move.to do
+      true ->
+        "#{Chess.board_square_color(i)} last_move"
+
+      false ->
+        Chess.board_square_color(i)
     end
   end
 end
