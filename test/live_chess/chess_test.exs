@@ -103,6 +103,19 @@ defmodule LiveChess.ChessTest do
 
       assert :viewer = Chess.table_player_side(table, viewer_player)
     end
+
+    test "third player is not added" do
+      white_player = %Player{name: "white_player"}
+      black_player = %Player{name: "black_player"}
+      third_player = %Player{name: "other_player"}
+
+      table = Chess.new_table(name: "table_name_test")
+        |> Chess.add_player(:white, white_player)
+        |> Chess.add_player(:black, black_player)
+        |> Chess.add_player(:black, third_player)
+
+      assert %Table{white_player: ^white_player, black_player: ^black_player} = table
+    end
   end
 
   describe "player" do
@@ -151,6 +164,16 @@ defmodule LiveChess.ChessTest do
         |> Chess.game_play(%Move{from: "e2", to: "e4"})
 
       assert :black = Chess.who_move_next?(table)
+    end
+
+    test "returns error when is not whites turn" do
+      {:ok, table} =
+        Chess.new_table(name: "table_name_test")
+        |> Chess.add_player(:white, %Player{name: "andres_white"})
+        |> Chess.add_player(:black, %Player{name: "felipe_black"})
+        |> Chess.game_play(%Move{from: "e2", to: "e4"})
+
+      assert {:error, "This is not move of w player"} = Chess.game_play(table, %Move{from: "d2", to: "d4"})
     end
   end
 end

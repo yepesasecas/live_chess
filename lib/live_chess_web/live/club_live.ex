@@ -13,7 +13,7 @@ defmodule LiveChessWeb.ClubLive do
     {:ok, assign(socket, %{player: player, changeset: changeset, club_tables: club_tables})}
   end
 
-  def handle_event("validate", %{"player" => player_params} = params, socket) do
+  def handle_event("validate", %{"player" => player_params}, socket) do
     changeset =
       %Player{}
       |> Chess.change_player(player_params)
@@ -29,7 +29,7 @@ defmodule LiveChessWeb.ClubLive do
     {:noreply, assign(socket, changeset: changeset, player: player)}
   end
 
-  def handle_event("save", %{"player" => player_params}, socket) do
+  def handle_event("save", %{"player" => _player_params}, socket) do
     changeset = socket.assigns[:changeset]
     player = socket.assigns[:player]
 

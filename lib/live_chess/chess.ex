@@ -3,7 +3,6 @@ defmodule LiveChess.Chess do
   alias Ecto.Changeset
 
   # Chess Game
-  def chess_game_struct, do: %Chess.Game{}
 
   def new_table(name: name) do
     game = Chess.new_game()
