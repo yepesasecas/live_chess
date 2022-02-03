@@ -10,7 +10,14 @@ defmodule LiveChess.MixProject do
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -50,7 +57,8 @@ defmodule LiveChess.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:chess, "~> 0.4.1"},
-      {:dictionary, "~> 0.1.0"}
+      {:dictionary, "~> 0.1.0"},
+      {:excoveralls, "~> 0.14.4", only: :test}
     ]
   end
 
