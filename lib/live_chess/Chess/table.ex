@@ -1,5 +1,5 @@
 defmodule LiveChess.Chess.Table do
-  defstruct name: nil, white_player: nil, black_player: nil, game: nil
+  defstruct name: nil, white_player: nil, black_player: nil, game: nil, fen: nil
 
   alias LiveChess.Chess.{Player, Table}
 

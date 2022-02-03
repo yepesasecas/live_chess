@@ -2,13 +2,13 @@ defmodule LiveChessWeb.TableLiveView do
   use LiveChessWeb, :view
 
   alias LiveChess.Chess
-  alias LiveChess.Chess.Player
+  alias LiveChess.Chess.{Player, Fen}
 
   def render_white_chessboard(assigns) do
     ~H"""
     <div class="chessboard">
       <h1>White view</h1>
-      <%= for {square, i} <- fen_to_squares(assigns[:table].game.current_fen) do%>
+      <%= for {square, i} <- piece_placement(assigns[:table]) do%>
         <%= render_white_square(assigns, square, i) %>
       <% end %>
     </div>
@@ -19,7 +19,7 @@ defmodule LiveChessWeb.TableLiveView do
     ~H"""
     <h1>Black view</h1>
     <div class="chessboard">=
-      <%= for {square, i} <- fen_to_squares(:black, assigns[:table].game.current_fen) do%>
+      <%= for {square, i} <- piece_placement(:black, assigns[:table]) do%>
         <%= render_black_square(assigns, square, i) %>
       <% end %>
     </div>
@@ -30,7 +30,7 @@ defmodule LiveChessWeb.TableLiveView do
     ~H"""
     <h1>Viewer view</h1>
     <div class="chessboard">
-      <%= for {square, i} <- fen_to_squares(assigns[:table].game.current_fen) do%>
+      <%= for {square, i} <- piece_placement(assigns[:table]) do%>
         <%= render_white_square(assigns, square, i) %>
       <% end %>
     </div>
@@ -69,35 +69,15 @@ defmodule LiveChessWeb.TableLiveView do
   def has_player?(%Player{name: name}), do: name
 
   # helpers
-  defp fen_to_squares(:black, fen) do
-    [fen | _] = String.split(fen)
-
-    fen
-    |> String.reverse()
-    |> fen_to_squares()
-  end
-
-  defp fen_to_squares(fen) do
-    [fen | _] = String.split(fen)
-
-    fen
-    |> String.replace("/", "")
-    |> String.graphemes()
-    |> replace_empty_squares()
-    |> List.flatten()
+  defp piece_placement(:black, table) do
+    table.fen.piece_placement
+    |> Enum.reverse()
     |> Enum.with_index()
   end
 
-  defp replace_empty_squares(squares) do
-    Enum.map(squares, fn square ->
-      case Integer.parse(square) do
-        :error ->
-          square
-
-        {value, _} ->
-          ["empty"] |> List.duplicate(value) |> List.flatten()
-      end
-    end)
+  defp piece_placement(table) do
+    table.fen.piece_placement
+    |> Enum.with_index()
   end
 
   defp piece_image_name(square) do

@@ -1,21 +1,30 @@
 defmodule LiveChess.Chess do
-  alias LiveChess.Chess.{Board, Table, Move, Player}
+  alias LiveChess.Chess.{Board, Table, Move, Player, Fen}
   alias Ecto.Changeset
 
   # Chess Game
   def chess_game_struct, do: %Chess.Game{}
 
   def new_table(name: name) do
+    game = Chess.new_game()
+    fen = Fen.from_string(game.current_fen)
+
     %Table{
       name: name,
-      game: Chess.new_game()
+      game: game,
+      fen: fen
     }
   end
 
   def game_play(%Table{game: game} = table, %Move{} = move) do
     case Chess.play(game, Move.to_string(move)) do
       {:ok, updated_game} ->
-        {:ok, Map.put(table, :game, updated_game)}
+        table =
+          table
+          |> Map.put(:game, updated_game)
+          |> Map.put(:fen, Fen.from_string(updated_game.current_fen))
+
+        {:ok, table}
 
       {:error, msg} ->
         {:error, msg}
@@ -23,7 +32,11 @@ defmodule LiveChess.Chess do
   end
 
   def table_new_game(%Table{} = table) do
-    Map.put(table, :game, Chess.new_game())
+    new_game = Chess.new_game()
+
+    table
+    |> Map.put(:game, new_game)
+    |> Map.put(:fen, Fen.from_string(new_game.current_fen))
   end
 
   def table_status(%Table{} = table) do
@@ -51,6 +64,10 @@ defmodule LiveChess.Chess do
   end
 
   def table_player_side(_table, _player), do: :viewer
+
+  def who_move_next?(%Table{fen: %Fen{active_color: active_color}}) do
+    active_color
+  end
 
   # Move
 

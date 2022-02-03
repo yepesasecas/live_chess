@@ -35,8 +35,9 @@ defmodule LiveChessWeb.ClubLiveTest do
       {:ok, view, _html} = live(conn, "/")
 
       assert view
-      |> element("form")
-      |> render_change(%{player: %{name: "jhon doe"}}) =~ "<h1>Welcome <strong>jhon doe</strong> to LiveChess!</h1>"
+             |> element("form")
+             |> render_change(%{player: %{name: "jhon doe"}}) =~
+               "<h1>Welcome <strong>jhon doe</strong> to LiveChess!</h1>"
     end
   end
 end

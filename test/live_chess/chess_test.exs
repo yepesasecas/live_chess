@@ -106,7 +106,6 @@ defmodule LiveChess.ChessTest do
   end
 
   describe "player" do
-
     alias LiveChess.Chess
     alias LiveChess.Chess.Player
 
@@ -129,6 +128,29 @@ defmodule LiveChess.ChessTest do
         |> Chess.apply_changes_to_player()
 
       assert %Player{name: "player", uuid: _uuid} = player
+    end
+  end
+
+  describe "game" do
+    alias LiveChess.Chess
+    alias LiveChess.Chess.{Player, Move}
+
+    test "who moves next. first move for white" do
+      assert :white =
+               Chess.new_table(name: "table_name_test")
+               |> Chess.add_player(:white, %Player{name: "andres_white"})
+               |> Chess.add_player(:black, %Player{name: "felipe_black"})
+               |> Chess.who_move_next?()
+    end
+
+    test "who moves next. second move for black" do
+      {:ok, table} =
+        Chess.new_table(name: "table_name_test")
+        |> Chess.add_player(:white, %Player{name: "andres_white"})
+        |> Chess.add_player(:black, %Player{name: "felipe_black"})
+        |> Chess.game_play(%Move{from: "e2", to: "e4"})
+
+      assert :black = Chess.who_move_next?(table)
     end
   end
 end

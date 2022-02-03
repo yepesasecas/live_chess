@@ -25,6 +25,7 @@ defmodule LiveChessWeb.ClubLive do
       else
         socket.assigns[:player]
       end
+
     {:noreply, assign(socket, changeset: changeset, player: player)}
   end
 
