@@ -7,6 +7,9 @@
   margin: 20px;
   /*border: 25px solid #333;*/
 }
+.chessboard img {
+  margin-top: 10px;
+}
 .black {
   float: left;
   width: 80px;
