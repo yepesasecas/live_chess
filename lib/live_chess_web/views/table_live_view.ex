@@ -1,6 +1,5 @@
 defmodule LiveChessWeb.TableLiveView do
   use LiveChessWeb, :view
-
   alias LiveChess.Chess
   alias LiveChess.Chess.{Table, Player}
 
