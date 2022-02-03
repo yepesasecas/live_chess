@@ -19,6 +19,15 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 # Credits
   * https://codepen.io/viethoang012/pen/xRNgyM
 
+# Test
+  Run test with coverage
+  `$  MIX_ENV=test mix do coveralls.json`
+
+  Run test with coverate and HTML review
+  `$ MIX_ENV=test mix coveralls.html ; open cover/excoveralls.html`
+
+  Run tests
+  `$ mix test`
 
 ## Learn more
 
