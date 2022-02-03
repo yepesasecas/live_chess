@@ -1,12 +1,23 @@
 # LiveChess
-[![Coverage Status](https://coveralls.io/repos/github/yepesasecas/live_chess/badge.svg?branch=main)](https://coveralls.io/github/yepesasecas/live_chess?branch=main)
+Create a free, ad-free, and open-source internet chess server where anyone in the world can play online chess and we can practice elixir, phoenix and liveView. (LiveChess.. LiveView. you got it).
 
-LiveChess is inspired by:
-1. Elixir/Phoenix LiveView real time.
-2. lichess.org is an open sourced real time Chess server. backed by Scala.
-3. My curiosity to implement a lichess using Elixir and Phoenix.
+This project is inspired by [lichess.org](http://lichess.org). Lichess.org has created an awesome free and open-source project and community.
 
-To start your Phoenix server:
+also, inspired by the elixir community. I know, we can create a really awesome online chess server using Elixir, Phoenix and LiveView.
+
+**project status:** Alpha. Anyone is welcome to contribute.
+
+**links to production:** TODO
+
+TODO screenshots
+
+## Dependencies
+
+  1. Elixir
+  2. Phoenix
+  3. PostgreSQL
+
+## Installation
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
@@ -16,10 +27,18 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-# Credits
-  * https://codepen.io/viethoang012/pen/xRNgyM
+## Configuration
 
-# Test
+**TODO** If the software is configurable, describe it in detail, either here or in other documentation to which you link.
+
+## Usage
+
+**TODO** Show users how to use the software. Be specific. Use appropriate formatting when showing code snippets.
+
+## How to test
+
+[![Coverage Status](https://coveralls.io/repos/github/yepesasecas/live_chess/badge.svg?branch=main)](https://coveralls.io/github/yepesasecas/live_chess?branch=main)
+
   Run test with coverage
   `$  MIX_ENV=test mix do coveralls.json`
 
@@ -29,10 +48,21 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   Run tests
   `$ mix test`
 
-## Learn more
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Known issues
+
+Everything!
+
+## Getting help
+
+If you have questions, concerns, bug reports, etc, please file an issue in this repository's Issue Tracker.
+
+
+## Getting involved
+
+Fork the project, add new features, fix bugs and create a pull request.
+
+
+# Credits and references
+  * https://codepen.io/viethoang012/pen/xRNgyM
+  * [lichess.org](http://lichess.org). Inspiration to create **LiveChess**
