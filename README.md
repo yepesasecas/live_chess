@@ -1,4 +1,10 @@
 # LiveChess
+[![Coverage Status](https://coveralls.io/repos/github/yepesasecas/live_chess/badge.svg?branch=main)](https://coveralls.io/github/yepesasecas/live_chess?branch=main)
+
+LiveChess is inspired by:
+1. Elixir/Phoenix LiveView real time.
+2. lichess.org is an open sourced real time Chess server. backed by Scala.
+3. My curiosity to implement a lichess using Elixir and Phoenix.
 
 To start your Phoenix server:
 
