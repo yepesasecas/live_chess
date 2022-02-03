@@ -57,6 +57,13 @@ Everything!
 
 If you have questions, concerns, bug reports, etc, please file an issue in this repository's Issue Tracker.
 
+Some features to implement:
+  1. Better UI/UX.
+  2. Responsive board.
+  3. Clock time.
+  4. A 'waiting player to start match' loading page.
+  5. and, lots of other things I can't think in this moment.
+
 
 ## Getting involved
 
