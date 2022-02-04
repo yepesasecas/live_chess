@@ -36,7 +36,6 @@ defmodule LiveChessWeb.ClubLive do
     if changeset.valid? do
       {:noreply,
        socket
-       |> put_flash(:info, "waiting opponent")
        |> redirect(
          to:
            Routes.live_path(
