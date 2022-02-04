@@ -52,11 +52,13 @@ config :phoenix, :json_library, Jason
 import_config "#{config_env()}.exs"
 
 # Config tailwind
-config :tailwind, version: "3.0.18", default: [
-  args: ~w(
+config :tailwind,
+  version: "3.0.18",
+  default: [
+    args: ~w(
     --config=tailwind.config.js
     --input=css/app.css
     --output=../priv/static/assets/app.css
   ),
-  cd: Path.expand("../assets", __DIR__)
-]
+    cd: Path.expand("../assets", __DIR__)
+  ]

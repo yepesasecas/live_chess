@@ -7,7 +7,7 @@ defmodule LiveChessWeb.ClubLiveTest do
   describe "club" do
     test "disconnected and connected mount", %{conn: conn} do
       {:ok, _view, html} = live(conn, "/")
-      assert html =~ "<h1>Welcome <strong></strong> to LiveChess!</h1>"
+      assert html =~ "Welcome\n        <strong class=\"text-indigo-600 xl:inline\"></strong>\n        to LiveChess!"
       assert html =~ "Create table"
     end
 
@@ -27,7 +27,7 @@ defmodule LiveChessWeb.ClubLiveTest do
 
       # assert club_view has new table game and player displayed
       html = render(club_view)
-      assert html =~ "<h2>new_game_test</h2>"
+      assert html =~ "new_game_test"
       assert html =~ "test_player"
     end
 
@@ -37,7 +37,7 @@ defmodule LiveChessWeb.ClubLiveTest do
       assert view
              |> element("form")
              |> render_change(%{player: %{name: "jhon doe"}}) =~
-               "<h1>Welcome <strong>jhon doe</strong> to LiveChess!</h1>"
+               "Welcome\n        <strong class=\"text-indigo-600 xl:inline\">\njhon doe\n        </strong>\n        to LiveChess!"
     end
   end
 end
