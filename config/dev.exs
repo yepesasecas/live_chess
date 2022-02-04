@@ -25,7 +25,8 @@ config :live_chess, LiveChessWeb.Endpoint,
   secret_key_base: "PO2qE3XDU0ZbQHjI5nooD+joxqeL1C4hxyJNVizCbKLwU60kTrc9IgVfOnFW9Ujy",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

@@ -109,7 +109,8 @@ defmodule LiveChess.ChessTest do
       black_player = %Player{name: "black_player"}
       third_player = %Player{name: "other_player"}
 
-      table = Chess.new_table(name: "table_name_test")
+      table =
+        Chess.new_table(name: "table_name_test")
         |> Chess.add_player(:white, white_player)
         |> Chess.add_player(:black, black_player)
         |> Chess.add_player(:black, third_player)
@@ -173,7 +174,8 @@ defmodule LiveChess.ChessTest do
         |> Chess.add_player(:black, %Player{name: "felipe_black"})
         |> Chess.game_play(%Move{from: "e2", to: "e4"})
 
-      assert {:error, "This is not move of w player"} = Chess.game_play(table, %Move{from: "d2", to: "d4"})
+      assert {:error, "This is not move of w player"} =
+               Chess.game_play(table, %Move{from: "d2", to: "d4"})
     end
   end
 end

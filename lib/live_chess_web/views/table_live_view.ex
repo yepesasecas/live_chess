@@ -5,33 +5,42 @@ defmodule LiveChessWeb.TableLiveView do
 
   def render_white_chessboard(assigns) do
     ~H"""
-    <div class="chessboard">
-      <h1>White view</h1>
-      <%= for {square, i} <- piece_placement(assigns[:table]) do%>
-        <%= render_white_square(assigns, square, i) %>
-      <% end %>
+    <div class="m-5">
+      <p><%= has_player?(assigns.table.black_player) %></p>
+      <div class="chessboard">
+        <%= for {square, i} <- piece_placement(assigns[:table]) do%>
+          <%= render_white_square(assigns, square, i) %>
+        <% end %>
+      </div>
+      <p><%= has_player?(assigns.table.white_player) %></p>
     </div>
     """
   end
 
   def render_black_chessboard(assigns) do
     ~H"""
-    <h1>Black view</h1>
-    <div class="chessboard">=
-      <%= for {square, i} <- piece_placement(:black, assigns[:table]) do%>
-        <%= render_black_square(assigns, square, i) %>
-      <% end %>
+    <div class="m-5">
+      <p><%= has_player?(assigns.table.white_player) %></p>
+      <div class="chessboard">
+        <%= for {square, i} <- piece_placement(:black, assigns[:table]) do%>
+          <%= render_black_square(assigns, square, i) %>
+        <% end %>
+      </div>
+      <p><%= has_player?(assigns.table.black_player) %></p>
     </div>
     """
   end
 
   def render_viewer_chessboard(assigns) do
     ~H"""
-    <h1>Viewer view</h1>
-    <div class="chessboard">
-      <%= for {square, i} <- piece_placement(assigns[:table]) do%>
-        <%= render_white_square(assigns, square, i) %>
-      <% end %>
+    <div class="m-5">
+      <p><%= has_player?(assigns.table.black_player) %></p>
+      <div class="chessboard">
+        <%= for {square, i} <- piece_placement(assigns[:table]) do%>
+          <%= render_white_square(assigns, square, i) %>
+        <% end %>
+      </div>
+      <p><%= has_player?(assigns.table.white_player) %></p>
     </div>
     """
   end

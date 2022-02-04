@@ -5,7 +5,7 @@ defmodule LiveChessWeb.TableLiveTest do
   describe "game" do
     test "disconnected and connected mount", %{conn: conn} do
       {:ok, _view, html} = live(conn, "/table/1")
-      assert html =~ "<h1>Table: 1</h1>"
+      assert html =~ "<strong>Table: </strong>1"
     end
 
     test "new", %{conn: conn} do
@@ -13,34 +13,34 @@ defmodule LiveChessWeb.TableLiveTest do
 
       assert view
              |> element("button#new_game")
-             |> render_click() =~ "game fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+             |> render_click() =~ "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 
       assert render_click(view, "click_square", %{"selected_square" => "e2"}) =~
-               "<div>from: e2</div>"
+               "e2"
 
       assert render_click(view, "click_square", %{"selected_square" => "e4"}) =~
-               "game fen: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR"
+               "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR"
     end
 
     test "as white player", %{conn: conn} do
       {:ok, _view, html} = live(conn, "/table/3?player_name=andres")
-      assert html =~ "white player: andres"
+      assert html =~ "andres"
       assert html =~ "square=\"a8\" class=\"white\"><img src=\"/images/black_r.png\""
     end
 
     test "as black player", %{conn: conn} do
-      {:ok, _view, _html} = live(conn, "/table/4?player_name=andres")
-      {:ok, _view, html} = live(conn, "/table/4?player_name=black")
-      assert html =~ "black player: black"
+      {:ok, _view, _html} = live(conn, "/table/4?player_name=white_player")
+      {:ok, _view, html} = live(conn, "/table/4?player_name=black_player")
+      assert html =~ "black_player"
       assert html =~ "square=\"h1\" class=\"white\"><img src=\"/images/white_R.png\"/>"
     end
 
     test "with both players", %{conn: conn} do
-      {:ok, _view, _html} = live(conn, "/table/2?player_name=white")
-      {:ok, _view, html} = live(conn, "/table/2?player_name=black")
+      {:ok, _view, _html} = live(conn, "/table/2?player_name=white_player")
+      {:ok, _view, html} = live(conn, "/table/2?player_name=black_player")
 
-      assert html =~ "white player: white"
-      assert html =~ "black player: black"
+      assert html =~ "white_player"
+      assert html =~ "black_player"
     end
   end
 end

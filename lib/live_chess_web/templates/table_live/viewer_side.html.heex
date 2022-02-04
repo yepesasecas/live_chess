@@ -1,12 +1,40 @@
-<%= render_viewer_chessboard(assigns) %>
-<h1>Table: <%= @table.name%></h1>
-<div>error_msg: <%= @error_msg %></div>
-<div>from: <%= @from_square %></div>
-<div>game check: <%= @table.game.check %></div>
-<div>game fen: <%= @table.game.current_fen %></div>
-<div>game status: <%= @table.game.status %></div>
-<div>white player: <%= has_player?(@table.white_player) %></div>
-<div>black player: <%= has_player?(@table.black_player) %></div>
-<div>
-  <button id="new_game" phx-click="new_game">new game</button>
+<div class="flex flex-row">
+  <div class="basis-1/2">
+    <%= render_viewer_chessboard(assigns) %>
+  </div>
+  <div class="basis-1/2 m-10">
+    <div class="bg-gray-100 shadow overflow-hidden sm:rounded-lg">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900"><strong>Table: </strong><%= @table.name%></h3>
+        <p><%= @error_msg %></p>
+      </div>
+      <div class="border-t border-gray-200">
+        <dl>
+          <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">white player</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= has_player?(@table.white_player) %></dd>
+          </div>
+          <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">black player</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= has_player?(@table.black_player) %></dd>
+          </div>
+          <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">selected square:</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @from_square %></dd>
+          </div>
+          <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">fen:</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @table.game.current_fen %></dd>
+          </div>
+          <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">status:</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @table.game.status %></dd>
+          </div>
+        </dl>
+      </div>
+      <div class="border-t border-gray-200 px-4 py-3">
+        <button id="new_game" phx-click="new_game">new game</button>
+      </div>
+    </div>
+  </div>
 </div>
