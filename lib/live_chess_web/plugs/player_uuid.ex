@@ -9,7 +9,7 @@ defmodule LiveChessWeb.Plugs.PlayerUuid do
     case get_session(conn, :player_uuid) do
       nil ->
         put_session(conn, :player_uuid, Player.uuid())
-      player_uuid ->
+      _player_uuid ->
         conn
     end
   end
