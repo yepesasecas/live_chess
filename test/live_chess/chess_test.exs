@@ -101,7 +101,7 @@ defmodule LiveChess.ChessTest do
         |> Chess.add_player(:white, white_player)
         |> Chess.add_player(:black, black_player)
 
-      assert :viewer = Chess.table_player_side(table, viewer_player)
+      assert :none = Chess.table_player_side(table, viewer_player)
     end
 
     test "third player is not added" do

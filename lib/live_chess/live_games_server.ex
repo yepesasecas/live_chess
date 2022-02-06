@@ -54,10 +54,15 @@ defmodule LiveChess.LiveGamesServer do
       case Map.get(tables, table_name) do
         nil ->
           Chess.new_table(name: table_name)
-          |> Chess.add_player(:white, player)
+          |> Chess.add_player(player)
 
         table ->
-          Chess.add_player(table, :black, player)
+          case Chess.table_player_side(table, player) do
+            :none ->
+              Chess.add_player(table, player)
+            _ ->
+              table
+          end
       end
 
     tables = Map.put(tables, table_name, table)

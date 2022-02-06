@@ -5,9 +5,9 @@ defmodule LiveChessWeb.ClubLive do
   alias LiveChess.LiveGamesServer
   alias LiveChess.Chess.Player
 
-  def mount(_params, _session, socket) do
+  def mount(_params, %{"player_uuid" => player_uuid}, socket) do
     player = Chess.new_player()
-    changeset = Chess.change_player(player, %{})
+    changeset = Chess.change_player(player, %{uuid: player_uuid})
     club_tables = LiveGamesServer.get_all()
     LiveChessWeb.Endpoint.subscribe(LiveGamesServer.all_tables_topic())
     {:ok, assign(socket, %{player: player, changeset: changeset, club_tables: club_tables})}

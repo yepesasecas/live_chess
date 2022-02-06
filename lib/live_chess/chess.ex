@@ -44,6 +44,32 @@ defmodule LiveChess.Chess do
     Table.status(table)
   end
 
+  def add_player(%Table{} = table, %Player{} = player) do
+    case Table.status(table) do
+      :playing ->
+        table
+
+      :waiting_black_player ->
+        add_player(table, :black, player)
+
+      :waiting_white_player ->
+        add_player(table, :white, player)
+
+      :no_players ->
+        add_player(table, :random, player)
+    end
+  end
+
+  def add_player(%Table{} = table, :random, %Player{} = player) do
+    case Enum.random(0..1) do
+      0 ->
+        add_player(table, :white, player)
+
+      1 ->
+        add_player(table, :black, player)
+    end
+  end
+
   def add_player(%Table{white_player: nil} = table, :white, %Player{} = player) do
     %{table | white_player: player}
   end
@@ -64,7 +90,7 @@ defmodule LiveChess.Chess do
     :black_player
   end
 
-  def table_player_side(_table, _player), do: :viewer
+  def table_player_side(_table, _player), do: :none
 
   def who_move_next?(%Table{fen: %Fen{active_color: active_color}}) do
     active_color
@@ -93,7 +119,7 @@ defmodule LiveChess.Chess do
   # Player
 
   def new_player do
-    %Player{uuid: Ecto.UUID.generate()}
+    %Player{uuid: Player.uuid()}
   end
 
   def change_player(player, params) do

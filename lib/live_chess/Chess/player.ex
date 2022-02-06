@@ -9,8 +9,12 @@ defmodule LiveChess.Chess.Player do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:name])
+    |> cast(params, [:name, :uuid])
     |> validate_required([:name])
     |> validate_length(:name, max: 20)
+  end
+
+  def uuid do
+    Ecto.UUID.generate()
   end
 end

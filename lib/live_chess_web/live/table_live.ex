@@ -4,12 +4,15 @@ defmodule LiveChessWeb.TableLive do
   require Logger
   alias LiveChess.{Chess, LiveGamesServer}
 
-  def mount(%{"name" => table_name} = params, _session, socket) do
+  def mount(%{"name" => table_name} = params, %{"player_uuid" => player_uuid}, socket) do
     player =
       case connected?(socket) do
         true ->
           Chess.new_player()
-          |> Chess.change_player(%{name: Map.get(params, "player_name", "Anonymus")})
+          |> Chess.change_player(%{
+              name: Map.get(params, "player_name", "Anonymus"),
+              uuid: player_uuid
+            })
           |> Chess.apply_changes_to_player()
 
         false ->
@@ -99,7 +102,7 @@ defmodule LiveChessWeb.TableLive do
       :black_player ->
         LiveChessWeb.TableLiveView.render("black_side.html", assigns)
 
-      :viewer ->
+      :none ->
         LiveChessWeb.TableLiveView.render("viewer_side.html", assigns)
     end
   end

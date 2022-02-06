@@ -8,6 +8,7 @@ defmodule LiveChessWeb.Router do
     plug :put_root_layout, {LiveChessWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug LiveChessWeb.Plugs.PlayerUuid
   end
 
   pipeline :api do
