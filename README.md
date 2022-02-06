@@ -9,7 +9,7 @@ also, inspired by the elixir community. I know, we can create a really awesome o
 
 **links to production:** TODO
 
-TODO screenshots
+<img width="1440" alt="Screen Shot 2022-02-05 at 9 00 30 PM" src="https://user-images.githubusercontent.com/1679292/152665200-bddaf78b-2b0a-4817-b476-6b18ec3bfe14.png">
 
 ## Dependencies
 
