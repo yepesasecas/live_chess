@@ -72,3 +72,4 @@ Some features to implement:
 # Credits and references
   * https://codepen.io/viethoang012/pen/xRNgyM
   * [lichess.org](http://lichess.org). Inspiration to create **LiveChess**
+  * deployment guide: https://staknine.com/deploy-phoenix-to-gigalixir-using-elixir-releases/
