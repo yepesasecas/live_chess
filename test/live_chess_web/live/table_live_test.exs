@@ -32,7 +32,7 @@ defmodule LiveChessWeb.TableLiveTest do
       {:ok, _view, _html} = live(conn, "/table/4?player_name=white_player")
       {:ok, _view, html} = live(conn, "/table/4?player_name=black_player")
       assert html =~ "black_player"
-      assert html =~ "square=\"h1\" class=\"white\"><img src=\"/images/white_R.png\"/>"
+      assert html =~ "square=\"h1\" class=\"white\"><img src=\"/images/white_r.png\"/>"
     end
 
     test "with both players", %{conn: conn} do
