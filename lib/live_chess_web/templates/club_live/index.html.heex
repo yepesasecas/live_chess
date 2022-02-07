@@ -14,7 +14,9 @@
     </p>
     <div class="mt-5 sm:mt-8 justify-center lg:justify-start">
       <.form let={f} for={@changeset} phx-change="validate" phx-submit="save">
-        <%= text_input f, :name, class: "focus:ring-indigo-500 focus:border-indigo-500 py-3 pl-7 pr-12 border-gray-300 rounded-md" %>
+        <%= text_input f, :name,
+              class: "focus:ring-indigo-500 focus:border-indigo-500 py-3 pl-7 pr-12 border-gray-300 rounded-md",
+              placeholder: "player's name" %>
         <%= submit "Create table", class: "mt-3 items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 " %>
         <%= error_tag f, :name %>
       </.form>

@@ -33,7 +33,16 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Usage
 
-**TODO** Show users how to use the software. Be specific. Use appropriate formatting when showing code snippets.
+1. To create a table you have two options:
+  1. use the url and change TABLE_NAME for any name you want. `https://livechess.gigalixirapp.com/table/TABLE_NAME`
+  2. go to `https://livechess.gigalixirapp.com/`. fill in you player name and click 'Create table'
+
+2. You are redirected to the game table. and waiting for your opponent to arrive.
+3. Share the url with your friends. or open the url in other browser.
+4. now you can start playing.
+
+### Setup you player's name
+1. You can setup your player name by passing the parameter `player_name=MY_NICKNAME`. Example: `https://livechess.gigalixirapp.com/table/TABLE_NAME?player_name=MY_NICKNAME`
 
 ## How to test
 
