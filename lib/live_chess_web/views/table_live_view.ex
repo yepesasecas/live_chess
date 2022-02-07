@@ -100,7 +100,7 @@ defmodule LiveChessWeb.TableLiveView do
 
   defp piece_image_name(square) do
     if square == String.upcase(square) do
-      "white_#{square}"
+      "white_#{String.downcase(square)}"
     else
       "black_#{square}"
     end
